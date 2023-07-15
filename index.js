@@ -33,7 +33,7 @@ const SECRET_KEY = "SECRET_KEY";
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = SECRET_KEY;
-
+server.use(express.static("build"))
 server.use(
   session({
     secret: "keyboard cat",
@@ -77,7 +77,7 @@ passport.use(
             return done(null, false, { message: "invalid credentials" });
           }
           const token = jwt.sign(sanitizerUser(user), SECRET_KEY);
-          done(null, token);
+          done(null, {token});
         }
       );
     } catch (error) {
